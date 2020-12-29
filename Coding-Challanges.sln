@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29306.81
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adventskalender2020-ProgrammierenStarten", "Adventskalender2020-ProgrammierenStarten\Adventskalender2020-ProgrammierenStarten.csproj", "{21B23C3D-61FF-4425-AA2E-55D65ADD9E59}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Random-ConsoleApps", "Random-ConsoleApps\Random-ConsoleApps.csproj", "{C9341103-80F1-49C9-82D9-BB245D079574}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Shared", ".Shared", "{52027CE2-B17C-497D-B09B-BB076E401436}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{21B23C3D-61FF-4425-AA2E-55D65ADD9E59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21B23C3D-61FF-4425-AA2E-55D65ADD9E59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21B23C3D-61FF-4425-AA2E-55D65ADD9E59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21B23C3D-61FF-4425-AA2E-55D65ADD9E59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9341103-80F1-49C9-82D9-BB245D079574}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9341103-80F1-49C9-82D9-BB245D079574}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9341103-80F1-49C9-82D9-BB245D079574}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9341103-80F1-49C9-82D9-BB245D079574}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {77D360D3-C499-4054-B0B6-98967EBFFA5B}
+	EndGlobalSection
+EndGlobal
