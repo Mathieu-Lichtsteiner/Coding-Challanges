@@ -12,7 +12,7 @@ var challengelist = new List<IChallenge>() {
 	new KlammerCheck("(2+5))*10+10"),
 	new SchaltJahrCheck(DateTime.Now),
 	new JaggedArrayMaximum(new int[][] { new int[]{ 1 , 12,15,36,2,5}, new int[]{ 5,12,96,4,7,5,12}, new int[]{ 10,12,12,56,1,12},} ),
-
+	new CustomContains("abcdefaölkjdfaölkdfsjgasdf", "kdfsjga"),
 };
 
 Console.WriteLine( "Programmier-Challenges von Programmieren-Starten.de" );
