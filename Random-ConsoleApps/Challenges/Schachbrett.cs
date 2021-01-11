@@ -3,23 +3,24 @@
 internal class Schachbrett : IProgram {
 	public void Run() {
 		int size;
-		do {
+		do
 			Console.Write( "Bitte die Grösse angeben: " );
-		}
-		while( int.TryParse( Console.ReadLine(), out size ) );
+		while( int.TryParse( Console.ReadLine(), out size ) is false );
 		Console.Write( "Bitte das erste Symbol angeben: " );
 		var x = Console.ReadKey( false ).KeyChar;
+		Console.WriteLine();
 		Console.Write( "Bitte das zweite Symbol angeben: " );
 		var y = Console.ReadKey( false ).KeyChar;
+		Console.WriteLine();
 		Print( size, x, y );
 	}
 	private void Print( int anzahl = 8, char black = 'X', char white = 'O' ) {
-		char start = black;
+		char now = black;
 		for( int i = 0; i < anzahl; i++ ) {
-			start = start == black ? white : black;
+			now = now == black ? black : white;
 			for( int j = 0; j < anzahl; j++ ) {
-				start = start == black ? white : black;
-				Console.Write( start + " " );
+				now = now == black ? white : black;
+				Console.Write( now + " " );
 			}
 			Console.WriteLine();
 		}

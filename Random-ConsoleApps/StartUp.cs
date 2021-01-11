@@ -9,14 +9,18 @@ var programList = new List<IProgram>() {
 	new NBonnacci(),
 	new FunctionPrinter(),
 	new EmirpPrimeNumbers(),
+	new RectanglePrinter(4,6, '*'),
 
 };
 
 Console.WriteLine( "Programmier-Challenges von Programmieren-Starten.de" );
 
 programList.ForEach( program => {
-	Console.WriteLine( $"{program.GetType().Name}:" );
-	program.Run();
+	Console.Write( $"--- {program.GetType().Name}: --- \n -> Run? [y/n]: " );
+	char re = Console.ReadKey().KeyChar;
+	Console.WriteLine();
+	if( re == 'y' )
+		program.Run();
 } );
 
 Console.ReadKey();
