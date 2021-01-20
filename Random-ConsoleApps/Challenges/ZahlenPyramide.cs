@@ -1,47 +1,24 @@
-﻿using System;
+﻿using RandomApps;
+using System;
 
-internal class ZahlenPyramide : IProgram {
-	public void Run() {
-		Console.WriteLine( "Willkommen bei der Zahlenpyramide" );
-		Console.Write( "Bitte bestätige mit Y/N: " );
-		string wiederholen = Console.ReadLine().ToUpper();
-		bool anyway = false;
-		int stufen = 0;
-		while( wiederholen == "Y" || anyway ) {
-			if( anyway is false ) {
-				Console.Write( "Bitte geben sie die Anzahl Stufen ein: " );
-				do
-					Console.Write( "Bitte eine Zahl eingeben!: " );
-				while( int.TryParse( Console.ReadLine(), out stufen ) is false );
-				Zahlenpyramide( stufen );
-			}
-			else {
-				Zahlenpyramide( stufen );
-				anyway = false;
-			}
-			Console.Write( "Eine neue Pyramide generieren? Y/N: " );
-			string help = Console.ReadLine();
-			anyway = Int32.TryParse( help, out stufen );
-			if( !anyway )
-				wiederholen = help.ToUpper();
-		}
-	}
+internal class ZahlenPyramide : Executeable {
 
-	private void Zahlenpyramide( int input ) {
-		if( input > 63 ) {
-			Console.WriteLine( "Achtung zu grosse Zahl! (max.63)" );
-			return;
-		}
+	#region private fields
+	private int _Input = 0;
+	#endregion
+
+	#region Executeable
+	protected override void Execute() {
 		Console.Write( "\n" );
-		for( int stufen = 0; stufen <= input; ++stufen ) {
+		for( int stufen = 0; stufen <= _Input; ++stufen ) {
 			int tester = 0;
-			for( int leer = input - stufen; leer >= 0; --leer ) {
-				if( input >= 10 ) {
-					if( input % 10 >= 0 && tester - 1 <= ((input % 10) + ((input / 10) - 1) * 10) ) {
+			for( int leer = _Input - stufen; leer >= 0; --leer ) {
+				if( _Input >= 10 ) {
+					if( _Input % 10 >= 0 && tester - 1 <= ((_Input % 10) + ((_Input / 10) - 1) * 10) ) {
 						Console.Write( "  " );
 						tester++;
 					}
-					else if( input % 10 == 0 && tester - 1 <= input - 10 ) {
+					else if( _Input % 10 == 0 && tester - 1 <= _Input - 10 ) {
 						Console.Write( "  " );
 						tester++;
 					}
@@ -57,4 +34,15 @@ internal class ZahlenPyramide : IProgram {
 		}
 		Console.Write( "\n" );
 	}
+	protected override void GetParameters() {
+
+		Console.Write( "Bitte geben sie die Anzahl Stufen ein: " );
+		while( int.TryParse( Console.ReadLine(), out _Input ) is false || _Input > 63 ) {
+			if( _Input > 63 )
+				Console.WriteLine( "Achtung zu grosse Zahl! (max.63)" );
+			Console.Write( "Bitte eine Zahl eingeben!: " );
+		}
+	}
+	#endregion
+
 }

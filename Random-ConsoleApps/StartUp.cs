@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 
 var programList = new List<IProgram>() {
+	new ZahlenPyramide(),
 	new Schachbrett(),
 	new ShowOperations(),
 	new SpaceRemover(),
-	new ZahlenPyramide(),
 	new NBonnacci(),
 	new FunctionPrinter(),
 	new EmirpPrimeNumbers(),
@@ -13,14 +13,9 @@ var programList = new List<IProgram>() {
 
 };
 
-Console.WriteLine( "Programmier-Challenges von Programmieren-Starten.de" );
+Console.WriteLine( "Programmier-Challenges" );
 
-programList.ForEach( program => {
-	Console.Write( $"--- {program.GetType().Name}: --- \n -> Run? [y/n]: " );
-	char re = Console.ReadKey().KeyChar;
-	Console.WriteLine();
-	if( re == 'y' )
-		program.Run();
-} );
+foreach( var program in programList )
+	program.Run();
 
 Console.ReadKey();
