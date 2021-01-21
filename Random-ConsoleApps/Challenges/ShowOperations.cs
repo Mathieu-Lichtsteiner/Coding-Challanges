@@ -1,45 +1,29 @@
-﻿using System;
-using System.Linq;
+﻿using RandomApps;
+using System;
 
-internal class ShowOperations : IProgram {
-	public void Run() {
-		int num1, num2;
-		Console.WriteLine( "Willkommen bei dem Programm, dass alle möglichen operationen mit 2 Zahlen durchführt! \nBitte geben sie zwei Zahlen ein!" );
-		do {
-			Console.Write( "Nummer 1: " );
-			while( !int.TryParse( Console.ReadLine(), out num1 ) || num1 == 0 ) {
-				Gültig();
-			}
-			Console.Write( "Nummer 2: " );
-			while( !int.TryParse( Console.ReadLine(), out num2 ) || num2 == 0 ) {
-				Gültig();
-			}
+internal class ShowOperations : Executeable {
 
-			Outputs( num1, num2 );
-			Console.Write( "Soll der Kehrwert berechnet werden? [j / n]: " );
-			if( Ja() ) {
-				Outputs( num2, num1 );
-			}
+	#region private fields
+	private int _Number1;
+	private int _Number2;
+	#endregion
 
-			Console.Write( "Wollen sie neue Zahlen eingeben? [j / n]: " );
-		} while( Ja() );
+	#region Executeable
+	public override string Description
+		=> "Dieses Programm führt diverse Operationen mit 2 Zahlen durch!";
+	protected override void Execute() {
+		Console.WriteLine( $"Summe:		{_Number1} + {_Number2} = {_Number1 + _Number2}" );
+		Console.WriteLine( $"Differenz:	{_Number1} - {_Number2} = {_Number1 - _Number2}" );
+		Console.WriteLine( $"Produkt:		{_Number1} * {_Number2} = {_Number1 * _Number2}" );
+		Console.WriteLine( $"Quotient:		{_Number1} / {_Number2} = {(double)_Number1 / _Number2}" );
+		Console.WriteLine( $"Rest:			{_Number1} / {_Number2} = {_Number1 & _Number2}" );
+		Console.WriteLine( $"Exponent:		{_Number1} ^ {_Number2} = {Math.Pow( _Number1, _Number2 )}" );
+		Console.WriteLine( $"Wurzel:		{_Number1} ^ 1/{_Number2} = {(double)Math.Pow( _Number1, 1.0 / _Number2 )}" );
 	}
-
-	private void Outputs( int num1, int num2 ) {
-		Console.WriteLine( "Summe:		{0} + {1} = {2}", num1, num2, num1 + num2 );
-		Console.WriteLine( "Differenz:	{0} - {1} = {2}", num1, num2, num1 - num2 );
-		Console.WriteLine( "Produkt:	{0} * {1} = {2}", num1, num2, num1 * num2 );
-		Console.WriteLine( "Quotient:	{0} / {1} = {2}", num1, num2, (double)num1 / num2 );
-		Console.WriteLine( "Rest:		{0} / {1} = {2}", num1, num2, num1 & num2 );
-		Console.WriteLine( "Exponent:	{0} ^ {1} = {2}", num1, num2, Math.Pow( num1, num2 ) );
-		Console.WriteLine( "Wurzel:		{0} ^ 1/{1} = {2}", num1, num2, (double)Math.Pow( num1, 1.0 / num2 ) );
+	protected override void GetParameters() {
+		_Number1 = GetParameter<int>( "Bitte die erste Zahl eingeben: ", (n => Equals( n, 0 ), "Bitte eine gültige Zahl eingeben! {n E Z/, n != 0}") );
+		_Number2 = GetParameter<int>( "Bitte die zweite Zahl eingeben: ", (n => Equals( n, 0 ), "Bitte eine gültige Zahl eingeben! {n E Z/, n != 0}") );
 	}
-
-	private void Gültig() {
-		Console.WriteLine( "Bitte eine gültige Zahl eingeben! {n E Z/, n != 0}" );
-	}
-
-	private bool Ja() =>
-		(new string[] { "ja", "j", "yes", "y", "yeah", "oui", "ouais", "si" }).Contains( Console.ReadLine().ToLower() );
+	#endregion
 
 }

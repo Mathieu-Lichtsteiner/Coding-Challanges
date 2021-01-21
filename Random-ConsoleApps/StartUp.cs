@@ -1,21 +1,21 @@
-﻿using System;
+﻿using RandomApps;
+using System;
 using System.Collections.Generic;
 
-var programList = new List<IProgram>() {
-	new ZahlenPyramide(),
-	new Schachbrett(),
-	new ShowOperations(),
-	new SpaceRemover(),
-	new NBonnacci(),
+var programList = new List<Executeable>() {
+	new ChessPattern(),
 	new FunctionPrinter(),
 	new EmirpPrimeNumbers(),
-	new RectanglePrinter(4,6, '*'),
+	new NBonnacci(),
+	new RectanglePrinter(),
+	new ShowOperations(),
+	new SpaceRemover(),
+	new NumberPyramid(),
 
 };
 
-Console.WriteLine( "Programmier-Challenges" );
+Console.WriteLine( "\n\t--- Programmier-Challenges ---\n" );
 
-foreach( var program in programList )
-	program.Run();
+programList.ForEach( p => p.Run() );
 
 Console.ReadKey();

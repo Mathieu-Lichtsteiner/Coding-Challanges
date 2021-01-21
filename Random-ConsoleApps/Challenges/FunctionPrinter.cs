@@ -1,16 +1,20 @@
-﻿using System;
+﻿using RandomApps;
+using System;
 using System.Linq;
 
-internal class FunctionPrinter : IProgram {
-	public void Run() {
+internal class FunctionPrinter : Executeable {
+
+	#region private methods
+	private Action _Method;
+	#endregion
+
+	#region Executeable
+	public override string Description
+		=> "Dieses Programm plotet eine Funktion";
+	protected override void Execute() {
 		double a, b, c, m;
 		char[,] view;
 		char modus;
-		Console.WriteLine(
-			"\t Willkommen beim Funktions-Drucker! " +
-			"\n\t Dieses Programm plotet eine Funktion" +
-			"\n\t entweder kann eine Lineare [L] oder eine Quadratische [Q] Funktion gedruckt werden" +
-			"\n" );
 		do {
 			// den Modus bestimmen lassen
 			do {
@@ -54,6 +58,9 @@ internal class FunctionPrinter : IProgram {
 		} while( Ja() );
 
 	}
+	protected override void GetParameters()
+		=> base.GetParameters();
+	#endregion
 
 	#region Math-Methods
 	private char[,] CalculateLinear( double m, double b, FieldDefinition size, char character = '*' ) {
@@ -110,7 +117,7 @@ internal class FunctionPrinter : IProgram {
 
 	#region Input-Methods
 
-	private static void DoubleInput( out double output, string name ) {
+	private void DoubleInput( out double output, string name ) {
 		Console.Write( $"{name}: " );
 		while( double.TryParse( Console.ReadLine(), out output ) == false ) {
 			Console.WriteLine( @"Bitte eine gültige Zahl eingeben! {n E Q/}" );
@@ -118,7 +125,7 @@ internal class FunctionPrinter : IProgram {
 		}
 	}
 
-	private static void IntInput( out int output, string name ) {
+	private void IntInput( out int output, string name ) {
 		Console.Write( $"{name}: " );
 		while( !int.TryParse( Console.ReadLine(), out output ) ) {
 			Console.WriteLine( @"Bitte eine gültige Zahl eingeben! {n E Z/}" );
@@ -126,12 +133,12 @@ internal class FunctionPrinter : IProgram {
 		}
 	}
 
-	private static bool Ja() {
+	private bool Ja() {
 		string[] jaAntworten = { "ja", "j", "yes", "y", "yeah", "oui", "ouais", "si" };
 		return jaAntworten.Contains( Console.ReadLine().ToLower().Trim() );
 	}
 
-	private static FieldDefinition SizeInput() {
+	private FieldDefinition SizeInput() {
 		Console.Write( "Möchten Sie einen benutzerdefinierten Plotbereich? " +
 			"\n[Standard = (-7,-7) bis (7,7)]" +
 			"\n[J / N]: " );
@@ -166,7 +173,7 @@ internal class FunctionPrinter : IProgram {
 			YEnd = Math.Max( yStart, yEnd );
 		}
 		public bool IsXOnesided()
-			=> (XStart > 0 && XEnd > 0) || (XStart < 0 && XEnd < 0);
+			=> (XStart >= 0 && XEnd > 0) || (XStart < 0 && XEnd <= 0);
 		public int GetWidth() {
 			int width = Math.Abs( XStart ) + Math.Abs( XEnd );
 			if( IsXOnesided() )
@@ -174,7 +181,7 @@ internal class FunctionPrinter : IProgram {
 			return width;
 		}
 		public bool IsYOnesided()
-			=> (YStart > 0 && YEnd > 0) || (YStart < 0 && YEnd < 0);
+			=> (YStart >= 0 && YEnd > 0) || (YStart < 0 && YEnd <= 0);
 		public int GetHeight() {
 			int height = Math.Abs( YStart ) + Math.Abs( YEnd );
 			if( IsYOnesided() )
@@ -183,4 +190,5 @@ internal class FunctionPrinter : IProgram {
 		}
 	}
 	#endregion
+
 }

@@ -1,7 +1,7 @@
 ﻿using RandomApps;
 using System;
 
-internal class ZahlenPyramide : Executeable {
+internal class NumberPyramid : Executeable {
 
 	#region private fields
 	private int _Input = 0;
@@ -35,13 +35,7 @@ internal class ZahlenPyramide : Executeable {
 		Console.Write( "\n" );
 	}
 	protected override void GetParameters() {
-
-		Console.Write( "Bitte geben sie die Anzahl Stufen ein: " );
-		while( int.TryParse( Console.ReadLine(), out _Input ) is false || _Input > 63 ) {
-			if( _Input > 63 )
-				Console.WriteLine( "Achtung zu grosse Zahl! (max.63)" );
-			Console.Write( "Bitte eine Zahl eingeben!: " );
-		}
+		_Input = GetParameter<int>( "Bitte geben sie die Anzahl Stufen ein: ", (n => n > 63, "Achtung zu grosse Zahl! (max.63)") );
 	}
 	#endregion
 

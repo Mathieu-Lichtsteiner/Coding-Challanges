@@ -1,8 +1,11 @@
-﻿using System;
+﻿using RandomApps;
+using System;
 using System.Linq;
 
-internal class EmirpPrimeNumbers : IProgram {
-	public void Run() {
+internal class EmirpPrimeNumbers : Executeable {
+
+	#region Executeable
+	protected override void Execute() {
 		string input = null;
 		bool prime, emirp;
 		Console.WriteLine( "\t Willkommen beim Primzahlen-Checker! \n\t Dieses Programm testet, ob die eingegebene Zahl eine Primzahl ist. \n\t Ausserdem wird der Kehrwert geprüft. \n\t Bitte gebe die zu untersuchende Zahl ein: " );
@@ -17,8 +20,11 @@ internal class EmirpPrimeNumbers : IProgram {
 			input = Console.ReadLine();
 		} while( input.ToLower() != "close" );
 	}
+	#endregion
+
+	#region private helpermethods
 	private bool IsEmirp( int number )
-		=> IsPrime( Mirrored( number ) );
+	=> IsPrime( Mirrored( number ) );
 	private bool IsPrime( int number ) {
 		for( int i = 2; i <= Math.Sqrt( number ); i++ )
 			if( number % i == 0 )
@@ -36,5 +42,6 @@ internal class EmirpPrimeNumbers : IProgram {
 			intArray[i] = int.Parse( string.Format( "{0}", number_string[i] ) );
 		return intArray;
 	}
+	#endregion
 
 }
