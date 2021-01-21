@@ -4,14 +4,15 @@ using System.Collections.Generic;
 
 var programList = new List<Executeable>() {
 	new ChessPattern(),
-	new FunctionPrinter(),
 	new EmirpPrimeNumbers(),
-	new NBonnacci(),
 	new RectanglePrinter(),
 	new ShowOperations(),
 	new SpaceRemover(),
 	new NumberPyramid(),
 
+	new FunctionPrinter(),
+	new NBonnacci(),
+	new Fibonnacci(),
 };
 
 Console.WriteLine( "\n\t--- Programmier-Challenges ---\n" );

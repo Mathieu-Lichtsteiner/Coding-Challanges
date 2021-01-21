@@ -1,69 +1,42 @@
 ﻿using RandomApps;
 using System;
+using System.Linq;
 
+// In this Program i want to show the Fibonnacci Sequences, but define how many elements get added up
 internal class NBonnacci : Executeable {
 
 	#region private fields
 	private int[] _NBonnacci;
 	private int _Basis;
 	private int _Steps;
-	private bool _Parse1 = false;
-	private bool _Parse2 = false;
-	private bool _Parseable;
-	private Action? _Method;
 	#endregion
 
 	#region Executeable
 	public override string Description
 		=> "In diesem Programm werden gewünscht viele Zahlen einer Fibonacci Reihe mit n basis ausgegeben!";
 	protected override void Execute() {
-		// wenn 0- oder 1-bonacci, return 0-Array
-		if( _Basis == 0 || _Basis == 1 ) {
-			_NBonnacci = Array.Empty<int>();
-			Console.WriteLine( "\n Die Basis wurde auf {0} gesetzt und würde in einer {1}er reihe von {0}en resultieren! \n", _Basis, _Steps );
-		}
-		// Wenn die Basis grösser als die Anzahl schritte ausgewählt wurde.
-		else if( _Basis >= _Steps )
-			Console.WriteLine( "\n Die Basis wurde grösser als die anzahl Schritte gesetzt. Das ersultat ist {0}*0", _Steps );
-		// Wenn eine korrekte basis gewählt wurde, kann die Methode ausgewählt werden und wird dann in einem String ausgegeben
-		else {
-			_NBonnacci = new int[_Steps];
-			Console.Write( "\t Bitte die Methode Rekursiv oder Itterativ wählen: " );
-			_Method = Console.ReadLine() switch {
-				"itterativ" => Itterativ,
-				"i" => Itterativ,
-				"rekursiv" => Rekursiv,
-				"r" => Rekursiv,
-				"erweitert" => Erweitert,
-				"e" => Erweitert,
-				_ => null
-			};
-			_Method?.Invoke();
-			string Ausgabe = string.Concat( string.Format( "{0}*0", _Basis - 1 ), string.Join( ", ", _NBonnacci ).Substring( 3 * (_Basis - 1) - 2 ) );
-			Console.WriteLine( "\n Die Fibonacci-Reihe mit Basis {0} lautet: \n\t {1} \n", _Basis, Ausgabe );
-		}
-		_Parse1 = false;
-		_Parse2 = false;
-	}
-	protected override void GetParameters() {
-		// Basis und schritte als Input verwerten
-		do {
-			if( _Parse1 )
-				Console.Write( $"\t Basis: {_Basis} " );
-			else {
-				Console.Write( "\t Bitte die Basis angeben: " );
-				_Parse1 = int.TryParse( Console.ReadLine(), out _Basis );
-			}
-			if( _Parse2 )
-				Console.Write( "\t Schritte: {0} ", _Steps );
-			else {
-				Console.Write( "\t Anzahl Schritte: " );
-				_Parse2 = int.TryParse( Console.ReadLine(), out _Steps );
-			}
-			_Parseable = _Parse1 && _Parse2;
-			if( !_Parseable )
-				Console.WriteLine( "Bitte nur ganze Zahlen eingeben!" );
-		} while( !_Parseable );
+
+		_Basis = GetParameter<int>( "Bitte die Basis angeben: ",
+			(n => n != 0, "Die Basis wurde auf 0 gesetzt und würde in einer reihe von nullen resultieren!") );
+
+		_Steps = GetParameter<int>( "Bitte die Anzahl Schritte eingeben: " );
+
+		string methodChar = GetParameter<string>(
+			"Bitte die Methode Rekursiv oder Itterativ wählen: [i/r/e] ",
+			(str => new[] { "itterativ", "i", "rekursiv", "r", "erweitert", "e" }.Contains( str?.ToLower() ), "Bitte eine richtige Methode anwählen! [i/r/e] ") );
+		Action method = methodChar.ToLower() switch {
+			"itterativ" or "i" => Itterativ,
+			"rekursiv" or "r" => Rekursiv,
+			"erweitert" or "e" => Erweitert,
+		};
+
+		_NBonnacci = new int[_Steps];
+		_NBonnacci[0] = _Basis;
+		_NBonnacci[1] = _Basis;
+		method?.Invoke();
+		string ausgabe = string.Concat( string.Format( $"{_Basis - 1}*0" ), string.Join( ", ", _NBonnacci ).Substring( 3 * (_Basis - 1) - 2 ) );
+		Console.WriteLine( $"\n Die Fibonacci-Reihe mit Basis {_Basis} lautet: \n\t {ausgabe} \n" );
+
 	}
 	#endregion
 

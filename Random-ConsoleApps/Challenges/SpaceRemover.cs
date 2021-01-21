@@ -3,21 +3,14 @@ using System;
 
 internal class SpaceRemover : Executeable {
 
-	#region private fields
-	private string _Input;
-	#endregion
-
-	#region properties
+	#region Executeable
 	public override string Description
 		=> "Dieses Programm fügt alle eingegebenen Strings zu einem Wort Zusammen.";
-	#endregion
+	protected override void Execute() {
+		string input = GetParameter<string>( "Bitte geben Sie einige Wörter ein: " );
+		string connected = ToWord( input );
 
-	#region Executeable
-	protected override void Execute()
-		=> Console.WriteLine( $"\t Die Eingegebenen wörter '{_Input}' \n\t lauten zusammengesetzt: '{ToWord( _Input )}'" );
-
-	protected override void GetParameters() {
-		_Input = GetParameter<string>( "Bitte geben Sie einige Wörter ein: " );
+		Console.WriteLine( $"\t Die Eingegebenen wörter '{input}' \n\t lauten zusammengesetzt: '{connected}'" );
 	}
 	#endregion
 

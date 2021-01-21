@@ -24,7 +24,6 @@ namespace RandomApps {
 			Console.Write( "Would You like to run this program? [y/n]: " );
 			while( _YesAwnsers.Contains( Console.ReadKey().KeyChar ) ) {
 				Console.WriteLine();
-				GetParameters();
 				Execute();
 				Console.Write( "Would You like to repeat this program? [y/n]: " );
 			}
@@ -34,13 +33,13 @@ namespace RandomApps {
 
 		#region abstract methods
 		protected abstract void Execute();
-		protected virtual void GetParameters() { }
 		#endregion
 
 		#region protected methods
-		protected T GetParameter<T>( string message, params (Predicate<T?>, string?)[]? conditions ) {
+		protected T GetParameter<T>( string message, params (Predicate<T?> condition, string? message)[]? conditions ) {
 			T? item = default( T );
 			Func<T?> input = item switch {
+				bool => () => (T)(object)_YesAwnsers.Contains( Console.ReadKey().KeyChar ),
 				int => () => int.TryParse( Console.ReadLine(), out int val ) ? (T)(object)val : (T)(object?)null,
 				double => () => double.TryParse( Console.ReadLine(), out double val ) ? (T)(object)val : (T)(object?)null,
 				char => () => (T)(object)Console.ReadKey().KeyChar,
@@ -49,15 +48,15 @@ namespace RandomApps {
 
 			// Force an input
 			do {
-				Console.WriteLine( message );
+				Console.Write( message.EndsWith( ' ' ) ? message : (message += " ") );
 				item = input();
 			} while( item is null );
 			Console.WriteLine();
 
 			// check if every specified condition is met
 			conditions?.ToList().ForEach( tuple => {
-				while( tuple.Item1( item ) is false ) {
-					Console.WriteLine( tuple.Item2 );
+				while( tuple.condition( item ) is false ) {
+					Console.Write( tuple.message ?? message );
 					item = input();
 				}
 				Console.WriteLine();

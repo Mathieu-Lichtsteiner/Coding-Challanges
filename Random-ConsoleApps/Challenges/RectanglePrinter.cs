@@ -3,24 +3,17 @@ using System;
 
 internal class RectanglePrinter : Executeable {
 
-	#region private fields
-	private int _Height;
-	private int _Width;
-	private char _Sign;
-	#endregion
-
 	#region Executeable
 	protected override void Execute() {
-		for( int i = 0; i < _Height; i++ )
-			for( int j = 0; j < _Width; j++ )
+		int width = GetParameter<int>( "Bitte die Länge angeben: " );
+		int height = GetParameter<int>( "Bitte die Höhe angeben: " );
+		char sign = GetParameter<char>( "Bitte ein Symbol eingeben: " );
+
+		for( int i = 0; i < height; i++ )
+			for( int j = 0; j < width; j++ )
 				Console.Write(
-					((i == 0 || i == _Height - 1) || (j == 0 || j == _Width - 1)) ?
-					(j == _Width - 1 ? _Sign + "\n" : _Sign) : " " );
-	}
-	protected override void GetParameters() {
-		_Width = GetParameter<int>( "Bitte die Länge angeben: " );
-		_Height = GetParameter<int>( "Bitte die Höhe angeben: " );
-		_Sign = GetParameter<char>( "Bitte ein Symbol eingeben: " );
+					((i == 0 || i == height - 1) || (j == 0 || j == width - 1)) ?
+					(j == width - 1 ? sign + "\n" : sign) : " " );
 	}
 	#endregion
 

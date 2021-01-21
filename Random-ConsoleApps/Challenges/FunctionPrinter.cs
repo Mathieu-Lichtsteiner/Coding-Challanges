@@ -2,71 +2,68 @@
 using System;
 using System.Linq;
 
+//TODO develop this
 internal class FunctionPrinter : Executeable {
-
-	#region private methods
-	private Action _Method;
-	#endregion
 
 	#region Executeable
 	public override string Description
 		=> "Dieses Programm plotet eine Funktion";
 	protected override void Execute() {
-		double a, b, c, m;
 		char[,] view;
-		char modus;
-		do {
-			// den Modus bestimmen lassen
-			do {
-				Console.Write( "Bitte gebe den gewünschten Modus ein! [L / Q]: " );
-				var input = Console.ReadLine().ToUpper().Trim();
-				modus = input == string.Empty ? ' ' : input[0];
-			} while( (modus == 'Q' || modus == 'L') == false );
+		double a, b, c, m;
+		FieldDefinition fieldDef;
 
-			switch( modus ) {
-				case 'Q':
-					Console.WriteLine( "\t Bitte die nötigen variabeln für y = ax^2+bx+c eingeben!" );
-					DoubleInput( out a, "a" );
-					DoubleInput( out b, "b" );
-					DoubleInput( out c, "c" );
+		if( GetParameter<bool>( "Möchten Sie einen benutzerdefinierten Plotbereich? (Standard: x = -7...7, y = -7...7 ): " ) ) {
+			int xStart = GetParameter<int>( "Startpunkt von x: " );
+			int xEnd = GetParameter<int>( "Endpunkt von x: " );
+			int yStart = GetParameter<int>( "Startpunkt von y: " );
+			int yEnd = GetParameter<int>( "Endpunkt von y: " );
+			fieldDef = new FieldDefinition( xStart, xEnd, yStart, yEnd );
+		}
+		else
+			fieldDef = new FieldDefinition( -7, 7, -7, 7 );
 
-					view = CalculateQuadratic( a, b, c, SizeInput() );
-					Console.Clear();
+		string modus = GetParameter<string>( "Bitte geben Sie den gewünschten Modus ein! [L / Q]: ",
+			(str => new[] { "quadratisch", "q", "linear", "l" }.Contains( str?.ToLower() ), "Bitte geben sie einen richtigen Modus ein! [L/Q]: ") ).ToLower();
 
-					Console.WriteLine( $"y = {a}x^2 + {b}x + {c} :" );
-					break;
-				case 'L':
-					Console.WriteLine( "\t Bitte die nötigen variabeln für y = mx+b eingeben!" );
-					DoubleInput( out m, "m" );
-					DoubleInput( out b, "b" );
+		switch( modus ) {
+			case "quadratisch" or "q":
+				Console.WriteLine( "Bitte die nötigen variabeln für y = ax^2+bx+c eingeben!" );
+				a = GetParameter<double>( @"Bitte eine gültige Zahl für a eingeben! {n E Q/} a: " );
+				b = GetParameter<double>( @"Bitte eine gültige Zahl für b eingeben! {n E Q/} b: " );
+				c = GetParameter<double>( @"Bitte eine gültige Zahl für c eingeben! {n E Q/} c: " );
 
-					view = CalculateLinear( m, b, SizeInput() );
-					Console.Clear();
+				view = CalculateQuadratic( a, b, c, fieldDef );
+				Console.Clear();
+				Console.WriteLine( $"y = {a}x^2 + {b}x + {c} :" );
+				break;
+			case "linear" or "l":
+				Console.WriteLine( "Bitte die nötigen variabeln für y = mx+b eingeben!" );
+				m = GetParameter<double>( @"Bitte eine gültige Zahl für m eingeben! {n E Q/} m: " );
+				b = GetParameter<double>( @"Bitte eine gültige Zahl für b eingeben! {n E Q/} b: " );
 
-					Console.WriteLine( $"y = {m}x + {b} :" );
-					break;
-				default:
-					view = new char[,] {
-						{' ', '|', ' ' },
-						{'-', '+', '-' },
-						{' ', '|', '-' }
-					};
-					break;
-			}
-			PrintView( view );
-			Console.Write( "Soll eine neue Funktion geplottet werden? [J / N]: " );
-		} while( Ja() );
+				view = CalculateLinear( m, b, fieldDef );
+				Console.Clear();
+				Console.WriteLine( $"y = {m}x + {b} :" );
+				break;
+			default:
+				view = new char[,] {
+					{' ', '|', ' ' },
+					{'-', '+', '-' },
+					{' ', '|', '-' }
+				};
+				break;
+		}
 
+		PrintView( view );
 	}
-	protected override void GetParameters()
-		=> base.GetParameters();
 	#endregion
 
 	#region Math-Methods
 	private char[,] CalculateLinear( double m, double b, FieldDefinition size, char character = '*' ) {
 		char[,] view = new char[size.GetWidth(), size.GetHeight()];
 		int plottedX, plottedY;
-		//y = mx+b
+		//y = m*x+b
 		for( int x = size.XStart; x < size.XEnd; x++ ) {
 			int y = Runden( m * x + b );
 
@@ -93,6 +90,9 @@ internal class FunctionPrinter : Executeable {
 	}
 	private int Runden( double input )
 		=> (int)Math.Round( input, 0, MidpointRounding.AwayFromZero );
+	#endregion
+
+	#region Print-Method
 	private void PrintView( char[,] view ) {
 		// iterates over all rows (y) in the array, starting from the top
 		for( int i = view.GetLength( 0 ) - 1; i >= 0; i-- ) {
@@ -115,63 +115,22 @@ internal class FunctionPrinter : Executeable {
 	}
 	#endregion
 
-	#region Input-Methods
-
-	private void DoubleInput( out double output, string name ) {
-		Console.Write( $"{name}: " );
-		while( double.TryParse( Console.ReadLine(), out output ) == false ) {
-			Console.WriteLine( @"Bitte eine gültige Zahl eingeben! {n E Q/}" );
-			Console.Write( $"{name}: " );
-		}
-	}
-
-	private void IntInput( out int output, string name ) {
-		Console.Write( $"{name}: " );
-		while( !int.TryParse( Console.ReadLine(), out output ) ) {
-			Console.WriteLine( @"Bitte eine gültige Zahl eingeben! {n E Z/}" );
-			Console.Write( $"{name}: " );
-		}
-	}
-
-	private bool Ja() {
-		string[] jaAntworten = { "ja", "j", "yes", "y", "yeah", "oui", "ouais", "si" };
-		return jaAntworten.Contains( Console.ReadLine().ToLower().Trim() );
-	}
-
-	private FieldDefinition SizeInput() {
-		Console.Write( "Möchten Sie einen benutzerdefinierten Plotbereich? " +
-			"\n[Standard = (-7,-7) bis (7,7)]" +
-			"\n[J / N]: " );
-
-		if( Ja() ) {
-			int xStart, xEnd, yStart, yEnd;
-			Console.WriteLine( "Bitte die gewünschte Grösse für den Plot angeben: " );
-			IntInput( out xStart, "Startpunkt von x" );
-			IntInput( out xEnd, "Endpunkt von x" );
-			IntInput( out yStart, "Startpunkt von y" );
-			IntInput( out yEnd, "Endpunkt von y" );
-
-			return new FieldDefinition( xStart, xEnd, yStart, yEnd );
-		}
-		else {
-			return new FieldDefinition( -7, 7, -7, 7 );
-		}
-	}
-
-	#endregion
-
 	#region FieldDefinition
 	private struct FieldDefinition {
-		public int XStart { get; set; }
-		public int XEnd { get; set; }
-		public int YStart { get; set; }
-		public int YEnd { get; set; }
+		public int XStart { get; init; }
+		public int XEnd { get; init; }
+		public int SizeX => XEnd - YEnd;
+		public int YStart { get; init; }
+		public int YEnd { get; init; }
+		public int SizeY => YEnd - YStart;
 		public FieldDefinition( int xStart, int xEnd, int yStart, int yEnd ) {
 			XStart = Math.Min( xStart, xEnd );
 			XEnd = Math.Max( xStart, xEnd );
 			YStart = Math.Min( yStart, yEnd );
 			YEnd = Math.Max( yStart, yEnd );
 		}
+
+		// Maybe i dont need those anymore
 		public bool IsXOnesided()
 			=> (XStart >= 0 && XEnd > 0) || (XStart < 0 && XEnd <= 0);
 		public int GetWidth() {
