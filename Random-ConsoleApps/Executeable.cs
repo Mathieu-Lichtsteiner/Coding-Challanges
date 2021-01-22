@@ -10,7 +10,7 @@ namespace RandomApps {
 
 		#region abstract properties
 		public virtual string Description { get; } = "";
-		public virtual string Source { get; } = "";
+		public virtual ChallengeSource? Source { get; } = null;
 		#endregion
 
 		#region public methods
@@ -18,8 +18,8 @@ namespace RandomApps {
 			Console.WriteLine( $"Welcome to {GetType().Name}!" );
 			if( string.IsNullOrWhiteSpace( Description ) is false )
 				Console.WriteLine( Description );
-			if( string.IsNullOrWhiteSpace( Source ) is false )
-				Console.WriteLine( $"\t (Source: {Source})" );
+			if( Source is ChallengeSource src )
+				Console.WriteLine( $"\t (Source: {src.GetDescription()})" );
 
 			Console.Write( "Would You like to run this program? [y/n]: " );
 			while( _YesAwnsers.Contains( Console.ReadKey().KeyChar ) ) {
