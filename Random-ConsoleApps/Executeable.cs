@@ -15,11 +15,11 @@ namespace RandomApps {
 
 		#region public methods
 		public void Run() {
-			Console.WriteLine( $"Welcome to {GetType().Name}!" );
+			Console.WriteLine( $"\n Programm: {GetType().Name}!" );
 			if( string.IsNullOrWhiteSpace( Description ) is false )
-				Console.WriteLine( Description );
+				Console.WriteLine( " " + Description );
 			if( Source is ChallengeSource src )
-				Console.WriteLine( $"\t (Source: {src.GetDescription()})" );
+				Console.WriteLine( $" (Source: {src.GetDescription()})" );
 
 			Console.Write( "Would You like to run this program? [y/n]: " );
 			while( _YesAwnsers.Contains( Console.ReadKey().KeyChar ) ) {
