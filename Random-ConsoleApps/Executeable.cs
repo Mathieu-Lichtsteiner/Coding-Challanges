@@ -41,6 +41,7 @@ namespace RandomApps {
 			Func<T?> input = item switch {
 				bool => () => (T)(object)_YesAwnsers.Contains( Console.ReadKey().KeyChar ),
 				int => () => int.TryParse( Console.ReadLine(), out int val ) ? (T)(object)val : (T)(object?)null,
+				uint => () => uint.TryParse( Console.ReadLine(), out uint val ) ? (T)(object)val : (T)(object?)null,
 				double => () => double.TryParse( Console.ReadLine(), out double val ) ? (T)(object)val : (T)(object?)null,
 				char => () => (T)(object)Console.ReadKey().KeyChar,
 				_ => () => (T)(object?)Console.ReadLine(),

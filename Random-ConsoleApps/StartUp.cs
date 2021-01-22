@@ -4,8 +4,9 @@ using System.Collections.Generic;
 
 var programList = new List<Executeable>() {
 
+	new IntToHexAndBinary(),
 
-
+	new PrimeFactors(),
 	new Fibonnacci(),
 	new FunctionPrinter(),
 	new NBonnacci(),
