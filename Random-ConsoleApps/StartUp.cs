@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 var programList = new List<Executeable>() {
 
-	new IntToHexAndBinary(),
 
 	new PrimeFactors(),
 	new Fibonnacci(),
@@ -15,12 +14,14 @@ var programList = new List<Executeable>() {
 	new ChessPattern(),
 	new DescribeCharacter(),
 	new EmirpPrimeNumbers(),
+	new IntToHexAndBinary(),
 	new NumberPyramid(),
 	new RectanglePrinter(),
 	new ShowOperations(),
 	new SpaceRemover(),
 	new SumAllNumbers(),
 	new TrianglePrinter(),
+	new WordPyramid(),
 };
 
 Console.WriteLine( "\n\t--- Programmier-Challenges ---" );

@@ -14,25 +14,10 @@ internal class IntToHexAndBinary : Executeable {
 	#endregion
 
 	#region private helpermethods
-	private string ToBinary( uint number ) {
-		StringBuilder output = new StringBuilder();
-		while( number > 0 ) {
-			output.Insert( 0, (number % 2 == 0) ? '0' : '1' );
-			number /= 2;
-		}
-		return output.ToString();
-	}
-	//=> ConvertBase( number, 2 );
-	private string ToHexadecimal( uint number ) {
-		char[] hex = new[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
-		StringBuilder output = new StringBuilder();
-		while( number > 0 ) {
-			output.Insert( 0, hex[number % 16] );
-			number /= 16;
-		}
-		return output.ToString();
-	}
-	//=> ConvertBase( number, 16, new[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' } );
+	private string ToBinary( uint number )
+		=> ConvertBase( number, 2 );
+	private string ToHexadecimal( uint number )
+		=> ConvertBase( number, 16, new[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' } );
 	private string ConvertBase( uint number, uint newBase, char[]? digitTable = null ) {
 		if( newBase > 10 && digitTable is null )
 			throw new ArgumentNullException( nameof( digitTable ), "if the base is bigger than 10, you have to define a digitTable" );

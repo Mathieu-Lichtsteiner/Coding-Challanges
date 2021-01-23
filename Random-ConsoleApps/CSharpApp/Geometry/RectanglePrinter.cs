@@ -4,6 +4,8 @@ using System;
 internal class RectanglePrinter : Executeable {
 
 	#region Executeable
+	public override string Description => "Zeichnet ein hohles Rechteck mit einer definierten Höhe, Breite und zeichen!";
+	public override ChallengeSource? Source => ChallengeSource.CSharpApp;
 	protected override void Execute() {
 		int width = GetParameter<int>( "Bitte die Länge angeben: " );
 		int height = GetParameter<int>( "Bitte die Höhe angeben: " );
