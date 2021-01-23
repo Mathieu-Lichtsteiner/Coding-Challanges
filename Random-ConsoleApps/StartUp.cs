@@ -5,7 +5,6 @@ using System.Collections.Generic;
 var programList = new List<Executeable>() {
 
 
-	new PrimeFactors(),
 	new Fibonnacci(),
 	new FunctionPrinter(),
 	new NBonnacci(),
@@ -16,6 +15,7 @@ var programList = new List<Executeable>() {
 	new EmirpPrimeNumbers(),
 	new IntToHexAndBinary(),
 	new NumberPyramid(),
+	new PrimeFactors(),
 	new RectanglePrinter(),
 	new ShowOperations(),
 	new SpaceRemover(),
