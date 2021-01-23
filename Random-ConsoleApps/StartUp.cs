@@ -5,15 +5,17 @@ using System.Collections.Generic;
 var programList = new List<Executeable>() {
 
 
-	new Fibonnacci(),
-	new FunctionPrinter(),
-	new NBonnacci(),
 
+	new FunctionPrinter(),
+
+	new Fibonnacci(),
+	new FibonnacciAddN(),
 	new CalculateRectangle(),
 	new ChessPattern(),
 	new DescribeCharacter(),
 	new EmirpPrimeNumbers(),
 	new IntToHexAndBinary(),
+	new NBonnacci(),
 	new NumberPyramid(),
 	new PrimeFactors(),
 	new RectanglePrinter(),

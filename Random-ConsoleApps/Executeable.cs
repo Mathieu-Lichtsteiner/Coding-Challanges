@@ -43,7 +43,12 @@ namespace RandomApps {
 				int => () => int.TryParse( Console.ReadLine(), out int val ) ? (T)(object)val : (T)(object?)null,
 				uint => () => uint.TryParse( Console.ReadLine(), out uint val ) ? (T)(object)val : (T)(object?)null,
 				double => () => double.TryParse( Console.ReadLine(), out double val ) ? (T)(object)val : (T)(object?)null,
-				char => () => (T)(object)Console.ReadKey().KeyChar,
+				char => () => {
+					var c = Console.ReadKey().KeyChar;
+					Console.WriteLine();
+					return (T)(object)c;
+				}
+				,
 				_ => () => (T)(object?)Console.ReadLine(),
 			};
 
@@ -52,7 +57,6 @@ namespace RandomApps {
 				Console.Write( message.EndsWith( ' ' ) ? message : (message += " ") );
 				item = input();
 			} while( item is null );
-			Console.WriteLine();
 
 			// check if every specified condition is met
 			conditions?.ToList().ForEach( tuple => {
@@ -60,7 +64,6 @@ namespace RandomApps {
 					Console.Write( tuple.message ?? message );
 					item = input();
 				}
-				Console.WriteLine();
 			} );
 
 			return item;
